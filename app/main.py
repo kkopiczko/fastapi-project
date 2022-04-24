@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .schemas import BookCreate
+from .routers import book
 
 app = FastAPI()
 
@@ -9,6 +9,5 @@ app = FastAPI()
 def root():
     return {"data": "root"}
 
-@app.post("/books")
-def add_book(book: BookCreate):
-    return {"new_post": book.dict()}
+app.include_router(book.router)
+
