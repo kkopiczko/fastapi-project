@@ -1,10 +1,10 @@
-# from typing import List, Optional
+from typing import Optional, List
 from pydantic import BaseModel
 
 class BookBase(BaseModel):
     title: str
     year_published: int
-    description: str | None = None
+    description: Optional[str] = None
 
 class BookCreate(BookBase):
     pass
@@ -26,7 +26,7 @@ class WriterCreate(WriterBase):
 
 class Writer(WriterBase):
     id: int
-    books_written: list[Book] = []
+    books_written: List[Book] = []
 
     class Config:
         orm_mode = True
