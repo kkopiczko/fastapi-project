@@ -1,5 +1,6 @@
 from typing import Optional, List
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
 
 class BookBase(BaseModel):
     title: str
@@ -32,7 +33,7 @@ class Writer(WriterBase):
         orm_mode = True
 
 class UserBase(BaseModel):
-    email: str
+    email: EmailStr
 
 
 class UserCreate(UserBase):
@@ -41,6 +42,7 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
+    created_at: datetime
 
     class Config:
         orm_mode = True
