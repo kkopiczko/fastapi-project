@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from .. import schemas, models, utils
 from sqlalchemy.orm import Session
 from ..database import get_db
+from datetime import datetime
 
 router = APIRouter(
     prefix="/users",
@@ -11,7 +12,7 @@ router = APIRouter(
 @router.post("/")
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     hashed_password = utils.hash(user.password)
-    user_with_hashed_password = {"email": user.email, "hashed_password": hashed_password}
+    user_with_hashed_password = {"email": user.email, "hashed_password": hashed_password, "created_at": datetime.now()}
     # user.hashed_password = hashed_password
 
     new_user = models.User(**user_with_hashed_password)
