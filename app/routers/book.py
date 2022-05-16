@@ -4,9 +4,6 @@ from .. import models
 from sqlalchemy.orm import Session
 from ..database import get_db
 
-from fastapi.security import OAuth2PasswordBearer
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 router = APIRouter(
     prefix="/books",
@@ -14,7 +11,7 @@ router = APIRouter(
 )
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-def add_book(book: schemas.BookCreate, db: Session = Depends(get_db), token: str= Depends(oauth2_scheme)):
+def add_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
     new_book = models.Book(**book.dict())
     db.add(new_book)
     db.commit()
