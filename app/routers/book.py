@@ -3,6 +3,7 @@ from .. import schemas
 from .. import models
 from sqlalchemy.orm import Session
 from ..database import get_db
+from ..oauth2 import get_current_user
 
 
 router = APIRouter(
@@ -19,7 +20,7 @@ def add_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
     return {"new_book": new_book}
 
 @router.get("/")
-def get_books(db: Session = Depends(get_db)):
+def get_books(db: Session = Depends(get_db), get_current_user: int = Depends(get_current_user)):
     books = db.query(models.Book).all()
     print(books)
     return {"books": books}
