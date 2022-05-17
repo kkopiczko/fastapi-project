@@ -20,9 +20,10 @@ def add_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
     return {"new_book": new_book}
 
 @router.get("/")
-def get_books(db: Session = Depends(get_db), get_current_user: int = Depends(get_current_user)):
+def get_books(db: Session = Depends(get_db), current_user: int = Depends(get_current_user)):
+    print(current_user.id)
     books = db.query(models.Book).all()
-    print(books)
+    # print(books)
     return {"books": books}
 
 @router.get("/{book_id}")
